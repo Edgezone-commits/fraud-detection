@@ -1,1 +1,24 @@
-﻿data/*.csv
+# Data: never commit. Download creditcard.csv from Kaggle into data/.
+data/
+*.csv
+
+# Trained artifacts: regenerate with scripts/train.py
+models/
+
+# Virtual environments
+venv/
+.venv/
+
+# Python caches and test output
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Notebook checkpoints and IDE/Anaconda state
+.ipynb_checkpoints/
+anaconda_projects/
+.vscode/
+.idea/
+
+# Secrets
+.env
