@@ -1,6 +1,9 @@
-# Development: tests, experiments and plots (not installed in the Docker image)
+# Development: tests, experiments, plots and the autoencoder notebook (not in Docker)
 -r requirements.txt
 matplotlib==3.11.2
 imbalanced-learn==0.14.2
 pytest==9.1.1
 httpx==0.28.1
+torch==2.14.1
+ipykernel==7.4.0
+nbconvert==7.17.1
