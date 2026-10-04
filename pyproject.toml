@@ -11,3 +11,8 @@ requires-python = ">=3.12"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Make `fraud_detection` (src/) and `app` (repo root) importable without installing.
+pythonpath = [".", "src"]
