@@ -14,13 +14,16 @@ from xgboost import XGBClassifier
 from fraud_detection.config import CV_FOLDS, RANDOM_STATE
 
 
-def make_xgboost(y_train):
-    """XGBoost with class weighting.
+def make_xgboost(y_train, class_weighted=True):
+    """XGBoost, by default with class weighting.
 
     scale_pos_weight = (legitimate rows) / (fraud rows), about 577 here. Each fraud
     then counts in the training loss like ~577 legitimate rows, so the model cannot
     score well by ignoring fraud. The weight comes from training labels only.
+    Pass class_weighted=False for the no-weighting baseline.
     """
+    if not class_weighted:
+        return XGBClassifier(n_estimators=100, eval_metric="aucpr", random_state=RANDOM_STATE, n_jobs=-1)
     n_legit = int((y_train == 0).sum())
     n_fraud = int((y_train == 1).sum())
     return XGBClassifier(
@@ -39,16 +42,16 @@ def train_model(X_train, y_train):
     return model
 
 
-def fit_calibrator(X_train, y_train):
-    """Sigmoid (Platt) calibration, trained on training data only.
+def fit_calibrator(X_train, y_train, method="isotonic"):
+    """Calibration trained on training data only. method: "sigmoid" or "isotonic".
 
     CalibratedClassifierCV trains CV_FOLDS copies of the model on parts of the
-    training data, then fits a logistic curve that maps raw scores to probabilities.
-    Sigmoid has 2 parameters, so it stays stable with few positives.
-    Isotonic regression has many more parameters and overfits on ~400 positives.
+    training data, then learns a map from raw scores to probabilities.
+    Sigmoid (Platt) has 2 parameters. Isotonic is a flexible step function.
+    The method is chosen in scripts/run_experiments.py by validation log loss.
     """
     calibrator = CalibratedClassifierCV(
-        estimator=make_xgboost(y_train), method="sigmoid", cv=CV_FOLDS
+        estimator=make_xgboost(y_train), method=method, cv=CV_FOLDS
     )
     calibrator.fit(X_train, y_train)
     return calibrator
