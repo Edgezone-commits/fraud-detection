@@ -1,0 +1,36 @@
+# Keep the build context small and keep data and secrets out of the image.
+# The image needs only src/, app/, models/ and requirements.txt.
+
+# Data (never copy the dataset into an image)
+data/
+*.csv
+
+# Local environments and caches
+venv/
+.venv/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# Development material that the API does not need
+notebooks/
+outputs/
+reports/
+tests/
+scripts/
+docs/
+anaconda_projects/
+**/.ipynb_checkpoints/
+requirements-dev.txt
+requirements-test.txt
+
+# Repository and CI files
+.git/
+.github/
+.gitignore
+.dockerignore
+Dockerfile
+
+# Secrets
+.env
