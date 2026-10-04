@@ -22,3 +22,6 @@ anaconda_projects/
 
 # Secrets
 .env
+
+# Packaging build output
+*.egg-info/
