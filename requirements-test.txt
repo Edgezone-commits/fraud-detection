@@ -1,0 +1,4 @@
+# Testing and CI: the runtime requirements plus pytest and the HTTP test client
+-r requirements.txt
+pytest==9.1.1
+httpx==0.28.1

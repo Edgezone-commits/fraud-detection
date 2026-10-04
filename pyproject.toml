@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fraud-detection"
+version = "0.1.0"
+description = "Credit card fraud detection with cost-aware thresholds, calibration and drift checks"
+requires-python = ">=3.12"
+# Dependencies are pinned in requirements.txt and requirements-dev.txt.
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Make `fraud_detection` (src/) and `app` (repo root) importable without installing.
+pythonpath = [".", "src"]
